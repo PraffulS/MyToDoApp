@@ -1,4 +1,54 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+  height: 100%;
+}
+
+:root {
+  --color-primary: #428bca;
+}
+
+.App {
+  font-family: sans-serif;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.title {
+  font-size: 20px;
+  background: rgb(126, 126, 223);
+  color: white;
+  font-weight: 700;
+  padding: 3%;
+  cursor: pointer;
+}
+
+li {
+  background: white;
+  border-radius: 5px;
+  padding: 2%;
+  font-size: 18px;
+  color: black;
+  margin-bottom: 9px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  font-weight: 300;
+  background-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.active-link {
+  color: #7e7edf;
+  font-weight: 700;
+}
+
+.count {
+  float: right;
 }
