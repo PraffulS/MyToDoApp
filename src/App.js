@@ -11,7 +11,7 @@ export default function App() {
         <div style={{ flex: 0.5, height: "100vh" }}>
           <SideBar />
         </div>
-        <div style={{ flex: 2 }}>
+        <div style={{ flex: 2, padding: "2% 1%" }}>
           <Switch>
             {routes.map((route, index) => (
               <Route

@@ -1,7 +1,10 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { toDoReducer } from "./reducers";
 
-const reducers = combineReducers({});
+const reducers = combineReducers({
+  todos: toDoReducer
+});
 
-let store = createStore(reducers, applyMiddleware(...[]));
+let store = createStore(reducers);
 
 export default store;

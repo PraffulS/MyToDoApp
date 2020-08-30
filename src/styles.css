@@ -1,14 +1,10 @@
+:root {
+  --color-primary: #7e7edf;
+}
+
 .App {
   font-family: sans-serif;
   height: 100%;
-}
-
-:root {
-  --color-primary: #428bca;
-}
-
-.App {
-  font-family: sans-serif;
 }
 
 .display-flex {
@@ -51,4 +47,55 @@ a:hover {
 
 .count {
   float: right;
+}
+
+.table-header {
+  color: #66666d;
+}
+
+.table-body {
+  background-color: white;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:focus {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  background-color: transparent !important;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary);
+}
+
+.data-card {
+  font-size: 14px;
+  border-bottom: 6px solid white;
+  padding: 1% 1%;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fbf9f9
+}
+
+.data-card:hover{
+  background-color: #f1eded
+}
+
+.badge {
+  font-size: 12px;
+}
+
+.sleek-button {
+  padding-right: 6%;
+  padding-left: 6%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.not-found {
+  text-align: center;
+  padding: 10%;
+  border: 1px solid #e6e6e6;
 }
