@@ -7,7 +7,7 @@ export class EmptyState extends React.Component {
         <div className="not-found">
           <i
             style={{ fontSize: "100px", color: "#f1a7a7" }}
-            class="fa fa-exclamation-triangle"
+            className="fa fa-exclamation-triangle"
           />{" "}
           <br />
           No Data Found.

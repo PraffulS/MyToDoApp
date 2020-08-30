@@ -2,6 +2,7 @@ import React from "react";
 import { Badge, Button } from "react-bootstrap";
 import { markStatus } from "../redux/actions";
 import moment from "moment";
+import { AddEditTodoModal } from "./AddEditTodoModal";
 
 export class DataCard extends React.Component {
   static defaultProps = {
@@ -9,7 +10,7 @@ export class DataCard extends React.Component {
   };
 
   state = {
-    show_modal: false
+    showModal: false
   };
 
   render_status = (isCompleted) => {
@@ -26,18 +27,22 @@ export class DataCard extends React.Component {
     );
   };
   render() {
-    const { show_modal } = this.state;
+    const { showModal } = this.state;
     const { data } = this.props;
     const { id, title, isCompleted = false, lastUpdatedAt, description } = data;
 
     return (
       <div className="data-card">
+        {!!showModal && (
+          <AddEditTodoModal
+            onHide={() => this.setState({ showModal: false })}
+            data={data}
+          />
+        )}
         <div className="display-flex" key={`tb-${id}`}>
           <div style={{ flex: 1 }}>{id + 1}</div>
           <div style={{ flex: 2 }}>{title}</div>
-          <div style={{ flex: 1.5 }}>
-            {moment(lastUpdatedAt).format("Do MMM YY, HH:MM a")}
-          </div>
+          <div style={{ flex: 1.5 }}>{lastUpdatedAt}</div>
           <div style={{ flex: 1 }}>{this.render_status(isCompleted)}</div>
           <div style={{ flex: 0.8 }}>
             <Button
@@ -49,7 +54,10 @@ export class DataCard extends React.Component {
             </Button>
           </div>
           <div style={{ flex: 0.3 }}>
-            <Button className="btn-sm sleek-button btn-outline-primary">
+            <Button
+              className="btn-sm sleek-button btn-outline-primary"
+              onClick={() => this.setState({ showModal: true })}
+            >
               {" "}
               Edit{" "}
             </Button>

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { saveTodo, updateTodo, deleteTodo, markStatus } from "./redux/actions";
-import { getToDosByStatus } from "./utils";
+import { getToDosByStatus, getActiveToDos } from "./utils";
 
 class SideBarImpl extends React.Component {
   static defaultProps = {
@@ -29,7 +29,9 @@ class SideBarImpl extends React.Component {
               <NavLink activeClassName="active-link" to="/to-do">
                 <i style={{ fontSize: "100%" }} className="fa fa-indent" />
                 &nbsp; &nbsp; All{" "}
-                <span className="count">{Object.keys(todos).length}</span>
+                <span className="count">
+                  {getActiveToDos(Object.values(todos)).length}
+                </span>
               </NavLink>
             </li>
             <li>

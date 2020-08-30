@@ -4,14 +4,19 @@ import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
 import { to_do_list_headers } from "../constants";
 import { Button } from "react-bootstrap";
 import { DataCard } from "./DataCard";
-import { getToDosByStatus } from "../utils";
+import { getToDosByStatus, getActiveToDos } from "../utils";
 import { EmptyState } from "./EmptyState";
+import { AddEditTodoModal } from "./AddEditTodoModal";
 
 class ToDoListViewImpl extends React.Component {
   static defaultProps = {
     todos: {},
     buckets: [],
     complete: null
+  };
+
+  state = {
+    showModal: false
   };
 
   componentDidMount() {}
@@ -29,7 +34,8 @@ class ToDoListViewImpl extends React.Component {
 
   render() {
     const { todos, buckets, complete } = this.props;
-    let filtered_data = todos;
+    const { showModal } = this.state;
+    let filtered_data = getActiveToDos(Object.values(todos));
 
     if (complete) {
       if (complete === 2) {
@@ -41,8 +47,18 @@ class ToDoListViewImpl extends React.Component {
 
     return (
       <div>
+        {!!showModal && (
+          <AddEditTodoModal
+            onHide={() => this.setState({ showModal: false })}
+          />
+        )}
         <div style={{ textAlign: "right" }}>
-          <Button className="btn btn-sm btn-outline-primary">+ Add New</Button>
+          <Button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => this.setState({ showModal: true })}
+          >
+            + Create New
+          </Button>
         </div>
         {Object.keys(filtered_data).length ? (
           <>

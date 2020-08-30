@@ -30,5 +30,5 @@ export const to_do_list_headers = [
   { label: "Title", flex: "2" },
   { label: "Last Updated", flex: "1.5" },
   { label: "Status", flex: "1" },
-  { label: "Actions", flex: "1" }
+  { label: "Actions", flex: "1.1" }
 ];
