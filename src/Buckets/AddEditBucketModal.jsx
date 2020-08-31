@@ -10,7 +10,7 @@ import {
 import store from "../redux/store";
 import moment from "moment";
 import CreatableSelect from "react-select/creatable";
-import { createOptionForReactSelect, getActiveToDos } from "../utils";
+import { createOptionForReactSelect, getActiveToDos, getTodosOfBucket } from "../utils";
 import { AddToDoList } from "./AddToDoList";
 
 export class AddEditBucketModal extends React.Component {
