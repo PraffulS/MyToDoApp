@@ -7,7 +7,7 @@ import { getToDosByStatus, getActiveToDos } from "./utils";
 class SideBarImpl extends React.Component {
   static defaultProps = {
     todos: {},
-    buckets: []
+    buckets: {}
   };
   componentDidMount() {}
   render() {
@@ -64,7 +64,7 @@ class SideBarImpl extends React.Component {
                   style={{ fontSize: "100%" }}
                   className="fa fa-shopping-bag"
                 />
-                &nbsp; &nbsp; My Buckets <span className="count">30</span>
+                &nbsp; &nbsp; My Buckets <span className="count">{getActiveToDos(Object.values(buckets)).length}</span>
               </NavLink>
             </li>
           </ul>
@@ -75,7 +75,7 @@ class SideBarImpl extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { todos = {}, buckets = [] } = state || {};
+  const { todos = {}, buckets = {} } = state || {};
   return { todos, buckets };
 }
 

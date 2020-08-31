@@ -12,7 +12,11 @@ const toDoReducer = (state = {}, action) => {
     case "DELETE_TO_DO":
       todo["isDeleted"] = true;
       todo = prepareInstance(todo, "id");
-			return { ...state, ...todo };
+      return { ...state, ...todo };
+    case "SAVE_TO_DOS":
+      let { todos = [] } = action;
+      todos = prepareInstances(todos, "id");
+      return { ...state, ...todos };
     case "MARK_STATUS":
       todo["isCompleted"] = flag;
       todo = prepareInstance(todo, "id");
@@ -22,4 +26,23 @@ const toDoReducer = (state = {}, action) => {
   }
 };
 
-export { toDoReducer };
+const bucketReducer = (state = {}, action) => {
+  let { bucket = {}, type } = action;
+  switch (type) {
+    case "SAVE_BUCKET":
+      bucket = prepareInstance(bucket, "id");
+      return { ...state, ...bucket };
+    case "UPDATE_BUCKET":
+      bucket = prepareInstance(bucket, "id");
+      return { ...state, ...bucket };
+    case "DELETE_BUCKET":
+      bucket["isDeleted"] = true;
+      bucket = prepareInstance(bucket, "id");
+      return { ...state, ...bucket };
+
+    default:
+      return state;
+  }
+};
+
+export { toDoReducer, bucketReducer };

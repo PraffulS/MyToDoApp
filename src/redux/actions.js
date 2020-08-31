@@ -6,7 +6,17 @@ const updateTodo = (todo) => store.dispatch({ type: "UPDATE_TO_DO", todo });
 
 const deleteTodo = (todo) => store.dispatch({ type: "DELETE_TO_DO", todo });
 
+const saveTodos = (todos) => store.dispatch({ type: "SAVE_TO_DOS", todos });
+
 const markStatus = (todo, flag) =>
   store.dispatch({ type: "MARK_STATUS", todo, flag });
 
-export { saveTodo, updateTodo, deleteTodo, markStatus };
+
+const saveBucket = (bucket) => store.dispatch({ type: "SAVE_BUCKET", bucket });
+
+const updateBucket = (bucket) => store.dispatch({ type: "UPDATE_BUCKET", bucket });
+
+const deleteBucket = (bucket) => store.dispatch({ type: "DELETE_BUCKET", bucket });
+
+
+export { saveTodo, updateTodo, deleteTodo, markStatus, saveTodos, saveBucket, updateBucket, deleteBucket };

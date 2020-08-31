@@ -1,18 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
-import { to_do_list_headers } from "../constants";
 import { Button } from "react-bootstrap";
-import { DataCard } from "./DataCard";
+import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
+import { buckets_list_headers } from "../constants";
 import { getToDosByStatus, getActiveToDos } from "../utils";
-import { EmptyState } from "./EmptyState";
-import { AddEditTodoModal } from "./AddEditTodoModal";
+import { EmptyState } from "../ToDos/EmptyState";
+import { AddEditBucketModal } from "./AddEditBucketModal";
 
-class ToDoListViewImpl extends React.Component {
+class BucketsListViewImpl extends React.Component {
   static defaultProps = {
     todos: {},
-    buckets: [],
-    complete: null
+    buckets: {}
   };
 
   state = {
@@ -22,7 +20,7 @@ class ToDoListViewImpl extends React.Component {
   componentDidMount() {}
 
   render_table_headers = () => {
-    return to_do_list_headers.map((ins, index) => {
+    return buckets_list_headers.map((ins, index) => {
       const { label, flex } = ins;
       return (
         <div key={`th-${index}`} className="p-3-0" style={{ flex: flex }}>
@@ -35,20 +33,12 @@ class ToDoListViewImpl extends React.Component {
   render() {
     const { todos, buckets, complete } = this.props;
     const { showModal } = this.state;
-    let filtered_data = getActiveToDos(Object.values(todos));
-
-    if (complete) {
-      if (complete === 2) {
-        filtered_data = getToDosByStatus(Object.values(filtered_data), true);
-      } else {
-        filtered_data = getToDosByStatus(Object.values(filtered_data), false);
-      }
-    }
+    let filtered_data = getActiveToDos(Object.values(buckets));
 
     return (
       <div>
         {!!showModal && (
-          <AddEditTodoModal
+          <AddEditBucketModal
             onHide={() => this.setState({ showModal: false })}
           />
         )}
@@ -65,11 +55,7 @@ class ToDoListViewImpl extends React.Component {
             <div className="display-flex table-header">
               {this.render_table_headers()}
             </div>
-            <div className="table-body">
-              {Object.keys(filtered_data).map((key, index) => (
-                <DataCard data={filtered_data[key]} key={`dc-${key}`} />
-              ))}
-            </div>
+            <div className="table-body"></div>
           </>
         ) : (
           <EmptyState />
@@ -80,8 +66,8 @@ class ToDoListViewImpl extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { todos = {}, buckets = [] } = state || {};
+  const { todos = {}, buckets = {} } = state || {};
   return { todos, buckets };
 }
 
-export const ToDoListView = connect(mapStateToProps)(ToDoListViewImpl);
+export const BucketsListView = connect(mapStateToProps)(BucketsListViewImpl);

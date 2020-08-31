@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Badge, Form } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
 import store from "../redux/store";
 import moment from "moment";

@@ -1,10 +1,13 @@
+import logger from "redux-logger";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import { toDoReducer } from "./reducers";
+import { toDoReducer, bucketReducer } from "./reducers";
 
 const reducers = combineReducers({
-  todos: toDoReducer
+  todos: toDoReducer,
+  buckets: bucketReducer
 });
 
-let store = createStore(reducers);
+const middlewares = [logger];
+let store = createStore(reducers, applyMiddleware(...middlewares));
 
 export default store;
