@@ -24,22 +24,31 @@ const getActiveToDos = (list) => {
   return list.filter((ins) => !ins.isDeleted);
 };
 
-export const createOptionForReactSelect = (list) => {
-    const options = [];
-    if (!list) {
-        return options;
-    }
-
-    list.forEach((instance) => {
-        options.push({
-            value: instance['id'],
-            label: instance['title'],
-            ...instance
-        });
-        
-    });
-
-    return options;
+const getTodosOfBucket = (list, bucketId) => {
+  return list.filter((ins) => !ins.isDeleted && ins.bucketId === bucketId);
 };
 
-export { prepareInstance, prepareInstances, getToDosByStatus, getActiveToDos };
+export const createOptionForReactSelect = (list) => {
+  const options = [];
+  if (!list) {
+    return options;
+  }
+
+  list.forEach((instance) => {
+    options.push({
+      value: instance["id"],
+      label: instance["title"],
+      ...instance
+    });
+  });
+
+  return options;
+};
+
+export {
+  prepareInstance,
+  prepareInstances,
+  getToDosByStatus,
+  getActiveToDos,
+  getTodosOfBucket
+};

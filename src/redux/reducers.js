@@ -1,7 +1,7 @@
 import { prepareInstance, prepareInstances } from "../utils";
 
 const toDoReducer = (state = {}, action) => {
-  let { todo = {}, flag, type } = action;
+  let { todo = {}, flag, type, todos = [] } = action;
   switch (type) {
     case "SAVE_TO_DO":
       todo = prepareInstance(todo, "id");
@@ -14,7 +14,13 @@ const toDoReducer = (state = {}, action) => {
       todo = prepareInstance(todo, "id");
       return { ...state, ...todo };
     case "SAVE_TO_DOS":
-      let { todos = [] } = action;
+      todos = prepareInstances(todos, "id");
+      return { ...state, ...todos };
+    case "DELETE_TO_DOS":
+      todos = todos.map((ins) => {
+        ins.isDeleted = true;
+        return ins;
+      });
       todos = prepareInstances(todos, "id");
       return { ...state, ...todos };
     case "MARK_STATUS":

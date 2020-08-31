@@ -1,11 +1,17 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
+import {
+  saveBucket,
+  saveTodos,
+  deleteBucket,
+  deleteTodos
+} from "../redux/actions";
 import store from "../redux/store";
 import moment from "moment";
 import CreatableSelect from "react-select/creatable";
-import { createOptionForReactSelect } from "../utils";
+import { createOptionForReactSelect, getActiveToDos } from "../utils";
 import { AddToDoList } from "./AddToDoList";
+import { getTodosOfBucket } from "../utils";
 
 export class AddEditBucketModal extends React.Component {
   static defaultProps = {
@@ -29,7 +35,11 @@ export class AddEditBucketModal extends React.Component {
   componentDidMount() {
     const { data = {}, todos = [] } = this.props;
     const { buckets = {} } = store.getState();
-    this.setState({ data, todos, buckets: Object.values(buckets) });
+    this.setState({
+      data,
+      todos,
+      buckets: getActiveToDos(Object.values(buckets))
+    });
   }
 
   updateField = (key, val) => {
@@ -40,14 +50,20 @@ export class AddEditBucketModal extends React.Component {
   addTodoInList = () => {
     const { todos = [] } = this.state;
     const new_state_ins = [...todos];
-    new_state_ins.push({ title: "", isDeleted: false, isCompleted: false });
+
+    new_state_ins.unshift({
+      title: "",
+      lastUpdatedAt: moment().format("Do MMM YY, HH:MM a"),
+      isDeleted: false,
+      isCompleted: false
+    });
     this.setState({ todos: new_state_ins });
   };
 
   removeTodoFromList = (index) => {
     const { todos = [] } = this.state;
     const new_state_ins = [...todos];
-    todos.splice(index, 1);
+    new_state_ins.splice(index, 1);
     this.setState({ todos: new_state_ins });
   };
 
@@ -60,36 +76,51 @@ export class AddEditBucketModal extends React.Component {
   };
 
   updateForm = () => {
-    const { data } = this.props;
+    let { data, todos } = this.state;
     const { id } = data;
-    const { todos = {} } = store.getState();
+    let currentCounter_todos = Object.keys(store.getState().todos || {}).length;
+    const currentCounter_buckets = Object.keys(store.getState().buckets || {})
+      .length;
 
     if (!id) {
-      saveTodo({
-        id: Object.keys(todos).length,
-        ...this.state
-      });
-    } else {
-      updateTodo({
-        ...this.state
+      saveBucket({
+        id: currentCounter_buckets,
+        ...this.state.data
       });
     }
+    todos = todos.map((ins) =>
+      ins.id !== undefined
+        ? ins
+        : {
+            ...ins,
+            ...{ bucketId: currentCounter_buckets, id: currentCounter_todos++ }
+          }
+    );
+    saveTodos(todos);
     this.props.onHide();
   };
 
   delete = () => {
-    deleteTodo({
-      ...this.state
+    const { todos = {} } = store.getState();
+    const { data } = this.state;
+    deleteBucket({
+      ...data
     });
+    deleteTodos(getTodosOfBucket(Object.values(todos), data.id));
     this.props.onHide();
   };
 
   handleChange = (newValue: any, actionMeta: any) => {
     const { data } = this.state;
+    const { todos = {} } = store.getState();
     if (newValue.__isNew__) {
       this.setState({ data: { ...data, title: newValue.value } });
     } else {
-      console.log("get all values & todos here..!");
+      let bucket_todos = getTodosOfBucket(Object.values(todos), newValue.id);
+      this.setState({
+        data: { ...data, ...newValue },
+        todos: bucket_todos
+      });
     }
   };
 
@@ -152,6 +183,7 @@ export class AddEditBucketModal extends React.Component {
             removeTodoFromList={this.removeTodoFromList}
             editTodoInList={this.editTodoInList}
           />
+          <br />
           <div style={{ textAlign: "right" }}>
             {!!(id !== undefined) && (
               <Button className="btn btn-outline-primary" onClick={this.delete}>
