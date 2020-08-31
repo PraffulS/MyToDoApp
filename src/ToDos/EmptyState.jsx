@@ -10,7 +10,7 @@ export class EmptyState extends React.Component {
             className="fa fa-exclamation-triangle"
           />{" "}
           <br />
-          No Data Found.
+          No Data Found. Use Create New button and start creating!
         </div>
       </div>
     );

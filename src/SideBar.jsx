@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { saveTodo, updateTodo, deleteTodo, markStatus } from "./redux/actions";
 import { getToDosByStatus, getActiveToDos } from "./utils";
 
 class SideBarImpl extends React.Component {

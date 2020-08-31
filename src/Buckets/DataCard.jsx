@@ -1,11 +1,12 @@
 import React from "react";
 import { Badge, Button } from "react-bootstrap";
-import { markStatus } from "../redux/actions";
-import { AddEditTodoModal } from "./AddEditTodoModal";
+import { AddEditBucketModal } from "./AddEditBucketModal";
+import { getTodosOfBucket } from "../utils";
 
 export class DataCard extends React.Component {
   static defaultProps = {
-    data: {}
+    data: {},
+    todos: []
   };
 
   state = {
@@ -27,32 +28,29 @@ export class DataCard extends React.Component {
   };
   render() {
     const { showModal } = this.state;
-    const { data } = this.props;
-    const { id, title, isCompleted = false, lastUpdatedAt, description } = data;
+    const { data, todos } = this.props;
+    const { id, title, lastUpdatedAt, description } = data;
+    const active_todos = getTodosOfBucket(Object.values(todos), id);
 
     return (
       <div className="data-card">
         {!!showModal && (
-          <AddEditTodoModal
+          <AddEditBucketModal
             onHide={() => this.setState({ showModal: false })}
             data={data}
+            todos={active_todos}
           />
         )}
         <div className="display-flex" key={`tb-${id}`}>
           <div style={{ flex: 1 }}>{id + 1}</div>
           <div style={{ flex: 2 }}>{title}</div>
-          <div style={{ flex: 1.5 }}>{lastUpdatedAt}</div>
-          <div style={{ flex: 1 }}>{this.render_status(isCompleted)}</div>
-          <div style={{ flex: 0.8 }}>
-            <Button
-              className="btn-sm sleek-button btn-outline-primary"
-              onClick={() => markStatus(data, !isCompleted)}
-            >
-              {" "}
-              Mark {isCompleted ? `Incomplete` : `Complete`}{" "}
-            </Button>
+          <div style={{ flex: 1.7 }}>{lastUpdatedAt}</div>
+          <div style={{ flex: 2 }}>
+            {active_todos.filter((ins) => ins.isCompleted).length} /{" "}
+            {active_todos.length}
           </div>
-          <div style={{ flex: 0.3 }}>
+
+          <div style={{ flex: 1 }}>
             <Button
               className="btn-sm sleek-button btn-outline-primary"
               onClick={() => this.setState({ showModal: true })}

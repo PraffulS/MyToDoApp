@@ -17,7 +17,7 @@ export class AddToDoList extends React.Component {
         style={{
           backgroundColor: isCompleted ? `#49bd49` : `#d9534f`,
           color: `white`,
-          fontSize: '10px'
+          fontSize: "10px"
         }}
       >
         {isCompleted ? `Completed` : `Incomplete`}

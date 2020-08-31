@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
 import { to_do_list_headers } from "../constants";
 import { Button } from "react-bootstrap";
 import { DataCard } from "./DataCard";
@@ -33,7 +32,7 @@ class ToDoListViewImpl extends React.Component {
   };
 
   render() {
-    const { todos, buckets, complete } = this.props;
+    const { todos, complete } = this.props;
     const { showModal } = this.state;
     let filtered_data = getActiveToDos(Object.values(todos));
 

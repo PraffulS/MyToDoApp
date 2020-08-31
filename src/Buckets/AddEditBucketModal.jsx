@@ -4,14 +4,14 @@ import {
   saveBucket,
   saveTodos,
   deleteBucket,
-  deleteTodos
+  deleteTodos,
+  updateBucket
 } from "../redux/actions";
 import store from "../redux/store";
 import moment from "moment";
 import CreatableSelect from "react-select/creatable";
 import { createOptionForReactSelect, getActiveToDos } from "../utils";
 import { AddToDoList } from "./AddToDoList";
-import { getTodosOfBucket } from "../utils";
 
 export class AddEditBucketModal extends React.Component {
   static defaultProps = {
@@ -36,10 +36,13 @@ export class AddEditBucketModal extends React.Component {
     const { data = {}, todos = [] } = this.props;
     const { buckets = {} } = store.getState();
     this.setState({
-      data,
       todos,
       buckets: getActiveToDos(Object.values(buckets))
     });
+
+    if (data.id !== undefined) {
+      this.setState({ data });
+    }
   }
 
   updateField = (key, val) => {
@@ -87,15 +90,23 @@ export class AddEditBucketModal extends React.Component {
         id: currentCounter_buckets,
         ...this.state.data
       });
+    } else {
+      updateBucket({
+        ...this.state.data
+      });
     }
-    todos = todos.map((ins) =>
-      ins.id !== undefined
-        ? ins
-        : {
-            ...ins,
-            ...{ bucketId: currentCounter_buckets, id: currentCounter_todos++ }
-          }
-    );
+    todos = todos.map((ins) => {
+      if (ins.id === undefined) {
+        ins.id = currentCounter_todos++;
+      }
+      if (id === undefined) {
+        ins.bucketId = currentCounter_buckets;
+      } else {
+        ins.bucketId = id;
+      }
+      return ins;
+    });
+
     saveTodos(todos);
     this.props.onHide();
   };
@@ -114,7 +125,7 @@ export class AddEditBucketModal extends React.Component {
     const { data } = this.state;
     const { todos = {} } = store.getState();
     if (newValue.__isNew__) {
-      this.setState({ data: { ...data, title: newValue.value } });
+      this.setState({ data: { ...data, ...{ title: newValue.value } } });
     } else {
       let bucket_todos = getTodosOfBucket(Object.values(todos), newValue.id);
       this.setState({
@@ -135,6 +146,7 @@ export class AddEditBucketModal extends React.Component {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         dialogClassName="modal-wide"
+        backdrop="static"
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">

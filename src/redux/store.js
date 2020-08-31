@@ -1,5 +1,5 @@
 import logger from "redux-logger";
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { toDoReducer, bucketReducer } from "./reducers";
 
 const reducers = combineReducers({

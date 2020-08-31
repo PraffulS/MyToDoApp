@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
-import { saveTodo, updateTodo, deleteTodo } from "../redux/actions";
 import { buckets_list_headers } from "../constants";
-import { getToDosByStatus, getActiveToDos } from "../utils";
+import { getActiveToDos } from "../utils";
 import { EmptyState } from "../ToDos/EmptyState";
 import { AddEditBucketModal } from "./AddEditBucketModal";
+import { DataCard } from "./DataCard";
 
 class BucketsListViewImpl extends React.Component {
   static defaultProps = {
@@ -31,7 +31,7 @@ class BucketsListViewImpl extends React.Component {
   };
 
   render() {
-    const { todos, buckets, complete } = this.props;
+    const { todos, buckets } = this.props;
     const { showModal } = this.state;
     let filtered_data = getActiveToDos(Object.values(buckets));
 
@@ -50,12 +50,16 @@ class BucketsListViewImpl extends React.Component {
             + Create New
           </Button>
         </div>
-        {Object.keys(filtered_data).length ? (
+        {filtered_data.length ? (
           <>
             <div className="display-flex table-header">
               {this.render_table_headers()}
             </div>
-            <div className="table-body"></div>
+            <div className="table-body">
+              {filtered_data.map((data, index) => (
+                <DataCard data={data} key={`dc-${index}`} todos={todos} />
+              ))}
+            </div>
           </>
         ) : (
           <EmptyState />

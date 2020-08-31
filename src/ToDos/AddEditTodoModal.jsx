@@ -63,6 +63,7 @@ export class AddEditTodoModal extends React.Component {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         dialogClassName="modal-wide"
+        backdrop="static"
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
