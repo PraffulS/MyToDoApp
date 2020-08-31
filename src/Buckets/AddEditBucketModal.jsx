@@ -10,7 +10,11 @@ import {
 import store from "../redux/store";
 import moment from "moment";
 import CreatableSelect from "react-select/creatable";
-import { createOptionForReactSelect, getActiveToDos, getTodosOfBucket } from "../utils";
+import {
+  createOptionForReactSelect,
+  getActiveToDos,
+  getTodosOfBucket
+} from "../utils";
 import { AddToDoList } from "./AddToDoList";
 
 export class AddEditBucketModal extends React.Component {
@@ -25,7 +29,7 @@ export class AddEditBucketModal extends React.Component {
       description: "",
       isCompleted: false,
       isDeleted: false,
-      lastUpdatedAt: moment().format("Do MMM YY, HH:MM a"),
+      lastUpdatedAt: moment().format("Do MMM YY, hh:mm a"),
       todos: []
     },
     todos: [],

@@ -66,7 +66,12 @@ class ToDoListViewImpl extends React.Component {
             </div>
             <div className="table-body">
               {Object.keys(filtered_data).map((key, index) => (
-                <DataCard data={filtered_data[key]} buckets={buckets} key={`dc-${key}`} />
+                <DataCard
+                  data={filtered_data[key]}
+                  index={index}
+                  buckets={buckets}
+                  key={`dc-${key}`}
+                />
               ))}
             </div>
           </>

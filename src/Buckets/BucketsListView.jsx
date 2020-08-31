@@ -57,7 +57,12 @@ class BucketsListViewImpl extends React.Component {
             </div>
             <div className="table-body">
               {filtered_data.map((data, index) => (
-                <DataCard data={data} key={`dc-${index}`} todos={todos} />
+                <DataCard
+                  data={data}
+                  index={index}
+                  key={`dc-${index}`}
+                  todos={todos}
+                />
               ))}
             </div>
           </>

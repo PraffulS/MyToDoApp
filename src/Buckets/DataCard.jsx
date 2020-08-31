@@ -28,7 +28,7 @@ export class DataCard extends React.Component {
   };
   render() {
     const { showModal } = this.state;
-    const { data, todos } = this.props;
+    const { data, todos, index } = this.props;
     const { id, title, lastUpdatedAt, description } = data;
     const active_todos = getTodosOfBucket(Object.values(todos), id);
 
@@ -42,7 +42,7 @@ export class DataCard extends React.Component {
           />
         )}
         <div className="display-flex" key={`tb-${id}`}>
-          <div style={{ flex: 1 }}>{id + 1}</div>
+          <div style={{ flex: 1 }}>{index + 1}</div>
           <div style={{ flex: 2 }}>{title}</div>
           <div style={{ flex: 1.7 }}>{lastUpdatedAt}</div>
           <div style={{ flex: 2 }}>

@@ -14,7 +14,7 @@ export class AddEditTodoModal extends React.Component {
     description: "",
     isCompleted: false,
     isDeleted: false,
-    lastUpdatedAt: moment().format("Do MMM YY, HH:MM a")
+    lastUpdatedAt: moment().format("Do MMM YY, hh:mm a")
   };
 
   componentDidMount() {
