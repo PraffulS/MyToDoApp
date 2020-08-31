@@ -8,6 +8,7 @@ Hosted on - https://csb-qojdd.netlify.app/ .It also makes use of other libraries
 React Bootstrap
 Redux
 react-router-dom
+redux-logger
 Moment
 
 To run the project on local environment
