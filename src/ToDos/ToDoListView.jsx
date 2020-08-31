@@ -10,7 +10,7 @@ import { AddEditTodoModal } from "./AddEditTodoModal";
 class ToDoListViewImpl extends React.Component {
   static defaultProps = {
     todos: {},
-    buckets: [],
+    buckets: {},
     complete: null
   };
 
@@ -32,7 +32,7 @@ class ToDoListViewImpl extends React.Component {
   };
 
   render() {
-    const { todos, complete } = this.props;
+    const { todos, complete, buckets } = this.props;
     const { showModal } = this.state;
     let filtered_data = getActiveToDos(Object.values(todos));
 
@@ -66,7 +66,7 @@ class ToDoListViewImpl extends React.Component {
             </div>
             <div className="table-body">
               {Object.keys(filtered_data).map((key, index) => (
-                <DataCard data={filtered_data[key]} key={`dc-${key}`} />
+                <DataCard data={filtered_data[key]} buckets={buckets} key={`dc-${key}`} />
               ))}
             </div>
           </>
@@ -79,7 +79,7 @@ class ToDoListViewImpl extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { todos = {}, buckets = [] } = state || {};
+  const { todos = {}, buckets = {} } = state || {};
   return { todos, buckets };
 }
 

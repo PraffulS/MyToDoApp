@@ -5,7 +5,8 @@ import { AddEditTodoModal } from "./AddEditTodoModal";
 
 export class DataCard extends React.Component {
   static defaultProps = {
-    data: {}
+    data: {},
+    buckets: {}
   };
 
   state = {
@@ -27,8 +28,15 @@ export class DataCard extends React.Component {
   };
   render() {
     const { showModal } = this.state;
-    const { data } = this.props;
-    const { id, title, isCompleted = false, lastUpdatedAt, description } = data;
+    const { data, buckets } = this.props;
+    const {
+      id,
+      title,
+      isCompleted = false,
+      lastUpdatedAt,
+      description,
+      bucketId
+    } = data;
 
     return (
       <div className="data-card">
@@ -65,7 +73,13 @@ export class DataCard extends React.Component {
         <div>
           Description -{" "}
           <i style={{ color: "#6f6f6f" }}>{description ? description : "-"}</i>{" "}
-          &nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {!!(bucketId !== undefined) && (
+            <>
+              <b>|</b> Bucket -{" "}
+              <i style={{ color: "#6f6f6f" }}>{buckets[bucketId].title}</i>
+            </>
+          )}
         </div>
       </div>
     );
